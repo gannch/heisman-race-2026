@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Heisman Race 2026</title>
+<meta name="description" content="Odds, fan votes, season stats and buzz for the top 2026 Heisman Trophy candidates.">
+<meta property="og:title" content="Heisman Race 2026">
+<meta property="og:description" content="Odds, fan votes, season stats and buzz for the top 2026 Heisman Trophy candidates.">
+<meta property="og:image" content="assets/photos/hero.jpg">
+<style>
+@font-face { font-family: 'HZ Lexend Deca'; font-style: normal; font-weight: 300 700; font-display: swap; src: url(assets/fonts/lexend-deca.woff2) format('woff2'); }
+@font-face { font-family: 'HZ Unbounded'; font-style: normal; font-weight: 400 700; font-display: swap; src: url(assets/fonts/unbounded.woff2) format('woff2'); }
+html, body { margin: 0; background: #000; }
+.hz-ph-hero { background-image: url(assets/photos/hero.jpg); }
+.hz-ph-stadium { background-image: url(assets/photos/stadium.jpg); }
+.hz-ph-ball { background-image: url(assets/photos/ball.jpg); }
+.hz-ph-crowd { background-image: url(assets/photos/crowd.jpg); }
+.hz-ph-qb { background-image: url(assets/photos/qb.jpg); }
+/* Stand-ins for the dashboard runtime's built-in styles */
+.dash-select { appearance: none; -webkit-appearance: none; height: 40px; padding: 0 36px 0 16px; font-size: 14px; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ddf240' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; }
+.dash-skeleton { color: transparent !important; background: rgba(127,127,127,.18); border-radius: 6px; min-height: 1em; }
+.dash-skeleton * { visibility: hidden; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="assets/dash-shim.js"></script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+/* Layout: full-width color bands (black / cream / sand), giant display word per band, lime accent. */
+#dash-root { --dash-gutter: 0; }
+.hz {
+  --lime: #ddf240; --black: #000; --ink: #151515; --cream: #f4eee6; --paper: #f4f2e9;
+  --sand: #c7a882; --stone: #dbd3c7; --olive: #4a4b2f; --moss: #6b654b;
+  --display: 'HZ Unbounded', 'Unbounded', 'Arial Black', system-ui, sans-serif;
+  --body: 'HZ Lexend Deca', 'Lexend Deca', ui-sans-serif, system-ui, sans-serif;
+  --pad-x: max(16px, 4vw);
+  font-family: var(--body); font-weight: 300; font-size: 16px; line-height: 1.5;
+  display: flex; flex-direction: column; color: var(--fg); background: var(--black);
+}
+.hz *, .hz *::before, .hz *::after { box-sizing: border-box; }
+.hz-band { background: var(--bg); color: var(--fg); overflow: hidden; position: relative; }
+.hz-inner { max-width: 1280px; margin: 0 auto; padding: 56px var(--pad-x); display: flex; flex-direction: column; gap: 28px; }
+.hz-dark { --bg: #000; --fg: #fff; --muted: rgba(255,255,255,.68); --accent: var(--lime); --line: rgba(255,255,255,.16); --panel: #151515; --big: var(--lime);
+  --s1: #ddf240; --s2: #f4f2e9; --s3: #c7a882; --s4: #9aa36b; --s5: #e07a4f; --s6: #8fb7c9; --s7: #d6a0a8; }
+.hz-cream { --bg: #f4eee6; --fg: #151515; --muted: #4a4b2f; --accent: #4a4b2f; --line: #dbd3c7; --panel: #fffdf8; --big: #4a4b2f;
+  --s1: #151515; --s2: #4a4b2f; --s3: #a07f55; --s4: #8a9a2c; --s5: #c4532c; --s6: #3f6f86; --s7: #a85a6a; }
+.hz-sand { --bg: #c7a882; --fg: #151515; --muted: #3a3a24; --accent: #151515; --line: rgba(21,21,21,.18); --panel: #dbd3c7; --big: #4a4b2f;
+  --s1: #151515; --s2: #4a4b2f; --s3: #f4f2e9; --s4: #6b654b; --s5: #8a3b1e; --s6: #2f5466; --s7: #7d3f4c; }
+.hz-foot-band { --bg: #151515; --fg: #f4f2e9; --muted: rgba(244,242,233,.62); --accent: var(--lime); --line: rgba(255,255,255,.12); --panel: #000; --big: var(--lime); }
+
+/* Hero */
+.hz-hero .hz-inner { padding-top: 28px; padding-bottom: 64px; gap: 36px; }
+.hz-topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hz-brand { font-family: var(--display); font-size: 18px; letter-spacing: -0.5px; color: var(--lime); }
+.hz-pill { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px; border-radius: 999px; border: .5px solid rgba(255,255,255,.9); background: rgba(0,0,0,.2); color: #fff; font-family: var(--body); font-weight: 400; font-size: 15px; letter-spacing: -0.3px; text-decoration: none; white-space: nowrap; }
+.hz-pill:hover, .hz-pill:focus-visible { background: var(--lime); color: #000; border-color: var(--lime); outline: none; }
+.hz-pill::after { content: "→"; font-size: 14px; }
+.hz-pill.hz-solid { background: rgba(0,0,0,.6); border-color: transparent; letter-spacing: .18em; padding: 0 18px 0 calc(18px + .18em); }
+.hz-pill.hz-solid::after { content: none; }
+.hz-headline { margin: 0; font-family: var(--body); font-weight: 400; font-size: clamp(36px, 6vw, 64px); line-height: 1.2; letter-spacing: -0.5px; max-width: 16ch; text-wrap: balance; }
+.hz-headline strong { font-weight: 700; }
+.hz-display { display: block; font-family: var(--display); font-weight: 500; color: var(--lime); font-size: clamp(44px, 8vw, 96px); letter-spacing: -0.05em; line-height: 1; margin-top: 8px; }
+.hz-date { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: 1.6px; font-size: clamp(18px, 2.4vw, 30px); }
+.hz-lede { margin: 0; font-size: clamp(16px, 1.6vw, 20px); line-height: 1.6; max-width: 62ch; color: var(--muted); }
+.hz-lede b { color: #fff; font-weight: 500; }
+.hz-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* Stat strip (label / value, like a race spec sheet) */
+.hz-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid var(--line); }
+.hz-stat { padding: 20px 20px 4px 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; border-bottom: 1px solid var(--line); }
+.hz-stat-label { font-size: 13px; font-weight: 400; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.hz-stat-name { font-family: var(--display); font-size: clamp(20px, 2.2vw, 26px); text-transform: lowercase; letter-spacing: -0.04em; line-height: 1.1; }
+.hz-stat-val { font-family: var(--display); font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.04em; line-height: 1; color: var(--accent); font-variant-numeric: tabular-nums; text-transform: lowercase; }
+.hz-stat-sub { font-size: 13px; color: var(--muted); padding-bottom: 16px; }
+
+/* Band titles: giant word behind a small label */
+.hz-title { position: relative; padding-top: 8px; container-type: inline-size; min-width: 0; }
+/* First guess from the word's length (--chars); the fit script below then measures and shrinks it to the content width exactly. */
+.hz-big { display: block; width: 100%; max-width: 100%; margin: 0; font-family: var(--display); font-weight: 600; text-transform: uppercase; white-space: nowrap; overflow: hidden; color: var(--big); font-size: min(220px, calc(100cqi / (var(--chars, 10) * 0.86))); line-height: .9; letter-spacing: -0.04em; opacity: .95; }
+.hz-label { margin: 0 0 6px; font-family: var(--display); font-weight: 400; font-size: clamp(16px, 1.8vw, 24px); text-transform: uppercase; letter-spacing: .6px; color: var(--fg); }
+.hz-sub { margin: 0; font-family: var(--body); font-weight: 400; font-size: clamp(24px, 3.2vw, 40px); line-height: 1.25; max-width: 24ch; text-wrap: balance; color: var(--fg); }
+.hz-note { margin: 0; font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 72ch; }
+.hz-h3 { margin: 0; font-family: var(--display); font-weight: 400; font-size: 18px; text-transform: lowercase; letter-spacing: -0.03em; }
+.hz-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 40px; }
+.hz-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+/* Charts */
+.hz-chart { position: relative; min-height: 280px; width: 100%; }
+.hz-chart svg { display: block; overflow: visible; }
+.hz-chart text { fill: var(--muted); font-size: 12px; font-family: var(--body); }
+.hz-chart .hz-lbl { fill: var(--fg); font-size: 14px; font-weight: 400; }
+.hz-chart .hz-val { fill: var(--fg); font-family: var(--display); font-size: 13px; }
+.hz-chart .tick line { stroke: var(--line); }
+.hz-chart .domain { stroke: var(--line); }
+.hz-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.hz-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.hz-legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.hz-legend i.hz-bar { width: 18px; height: 3px; border-radius: 0; }
+.hz-tip { position: absolute; pointer-events: none; background: var(--panel); color: var(--fg); border: 1px solid var(--line); box-shadow: 0 .5rem 2rem rgba(0,0,0,.18); border-radius: 8px; padding: 10px 12px; font-size: 13px; line-height: 1.5; z-index: 3; max-width: 260px; }
+.hz-tip strong { font-weight: 500; display: block; font-family: var(--display); text-transform: lowercase; letter-spacing: -0.03em; }
+.hz-fail { color: var(--muted); font-size: 13px; padding: 16px 0; }
+
+/* Tables */
+.hz-wrap { overflow-x: auto; }
+.hz-table { width: 100%; border-collapse: collapse; font-size: 15px; font-variant-numeric: tabular-nums; color: var(--fg); }
+.hz-table th { text-align: right; font-weight: 400; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 10px 12px; border-bottom: 1px solid var(--fg); white-space: nowrap; }
+.hz-table td { text-align: right; padding: 14px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; font-weight: 400; }
+.hz-table th:first-child, .hz-table td:first-child, .hz-table .hz-l { text-align: left; }
+.hz-table td.hz-name { font-family: var(--display); font-size: 15px; text-transform: lowercase; letter-spacing: -0.03em; text-align: left; }
+.hz-table td.hz-muted { color: var(--muted); }
+.hz-best { font-weight: 600 !important; }
+.hz-dark .hz-best { color: var(--lime); }
+.hz-cream .hz-best { background: var(--lime); }
+.hz-fav { font-weight: 600 !important; }
+.hz-up { color: var(--olive); font-weight: 500; }
+
+/* Fan podium */
+.hz-podium { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; min-height: 120px; }
+.hz-podium-card { background: var(--panel); border-radius: 8px; padding: 22px; display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; min-width: 0; }
+.hz-podium-card:first-child { background: var(--black); color: #fff; }
+.hz-podium-card:first-child .hz-podium-rank { color: var(--lime); }
+.hz-podium-card:first-child .hz-podium-sub { color: rgba(255,255,255,.7); }
+.hz-podium-rank { font-family: var(--display); font-size: 56px; line-height: .9; grid-row: span 2; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.hz-podium-name { font-family: var(--display); font-size: 20px; text-transform: lowercase; letter-spacing: -0.04em; line-height: 1.15; }
+.hz-podium-sub { font-size: 13px; color: var(--muted); }
+
+/* X posts */
+.hz-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.hz-posts { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; min-height: 160px; }
+.hz-post { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; transition: border-color .2s; }
+.hz-post:hover { border-color: var(--lime); }
+.hz-post-head { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--muted); }
+.hz-post-head b { color: var(--fg); font-weight: 500; font-size: 15px; }
+.hz-post p { margin: 0; line-height: 1.5; font-size: 15px; font-weight: 300; }
+.hz-chip { align-self: flex-start; font-family: var(--display); font-size: 12px; text-transform: lowercase; letter-spacing: -0.02em; background: var(--lime); color: #000; border-radius: 999px; padding: 3px 10px; }
+.hz-metrics { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line); }
+.hz-metrics b { color: var(--fg); font-weight: 500; }
+.hz-post a { font-size: 14px; color: var(--lime); text-decoration: none; font-weight: 400; }
+.hz-post a:hover, .hz-post a:focus-visible { text-decoration: underline; }
+.hz .dash-select { font-family: var(--body); background-color: var(--panel); color: var(--fg); border-radius: 999px; border: .5px solid var(--fg); }
+
+/* Footer */
+.hz-foot-band .hz-inner { padding-top: 48px; padding-bottom: 48px; }
+details.hz-foot summary { cursor: pointer; font-family: var(--display); text-transform: lowercase; letter-spacing: -0.03em; font-size: 18px; color: var(--lime); }
+details.hz-foot ul { font-size: 14px; color: var(--muted); line-height: 1.7; padding-left: 18px; margin: 14px 0 0; }
+.hz-foot-line { font-size: 13px; color: var(--muted); margin: 0; }
+
+/* Photos: hero background + full-bleed strips between bands */
+.hz-hero { isolation: isolate; }
+.hz-hero-bg { position: absolute; inset: 0; z-index: -1; width: 100%; background-color: #000; background-size: cover; background-position: center 30%; }
+.hz-hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 30%, rgba(0,0,0,.35) 62%, #000 100%), radial-gradient(ellipse at 30% 55%, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 65%); }
+.hz-hero { min-height: min(100vh, 980px); display: flex; flex-direction: column; justify-content: flex-end; }
+.hz-hero .hz-inner { width: 100%; }
+.hz-hero .hz-topbar { margin-bottom: auto; }
+.hz-hero .hz-headline, .hz-hero .hz-date, .hz-hero .hz-lede { text-shadow: 0 2px 24px rgba(0,0,0,.6); }
+.hz-hero .hz-lede { color: rgba(255,255,255,.86); }
+.hz-hero .hz-stats { background: rgba(0,0,0,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 8px; padding: 0 16px; border-top: 0; }
+.hz-strip { position: relative; height: clamp(220px, 42vw, 560px); background-color: #000; background-size: cover; background-position: center; overflow: hidden; }
+.hz-strip::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 45%); }
+.hz-strip-cap { position: absolute; z-index: 1; left: var(--pad-x); bottom: 20px; right: var(--pad-x); margin: 0; font-family: var(--display); font-size: clamp(22px, 4vw, 48px); letter-spacing: -0.04em; color: var(--lime); text-transform: lowercase; line-height: 1; }
+.hz-ph-ball.hz-strip { background-position: center 60%; }
+.hz-ph-qb.hz-strip { background-position: center 30%; }
+@media (prefers-reduced-motion: no-preference) {
+  .hz-strip { background-attachment: fixed; }
+  @supports (-webkit-touch-callout: none) { .hz-strip { background-attachment: scroll; } }
+}
+[data-dash-source-state=refreshing] { opacity: .5; }
+.hz a:focus-visible, .hz select:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .hz-inner { padding-top: 40px; padding-bottom: 40px; gap: 22px; }
+  .hz-stat { padding-right: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hz-big { animation: hz-rise .9s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes hz-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: .95; transform: none; } }
+}
+</style>
+
+<div class="hz">
+  <header class="hz-band hz-dark hz-hero" id="top">
+    <div class="hz-hero-bg hz-ph-hero" aria-hidden="true"></div>
+    <div class="hz-inner">
+      <div class="hz-topbar">
+        <span class="hz-brand">Heisman race</span>
+        <span class="hz-pill hz-solid">2026 SEASON</span>
+      </div>
+      <div>
+        <h1 class="hz-headline">The race to <strong>New York</strong> <span class="hz-display">Heisman 2026</span></h1>
+      </div>
+      <p class="hz-date">December 12, 2026</p>
+      <p class="hz-lede" id="takeaway"><b data-draw="lead-name" data-source="consensus" data-field="player" data-row="0">—</b> leads the betting consensus with a <b data-draw="lead-pct" data-source="consensus" data-field="consensus_pct" data-row="0">—</b> implied chance, ahead of <b data-draw="second-name" data-source="consensus" data-field="player" data-row="1">—</b> at <b data-draw="second-pct" data-source="consensus" data-field="consensus_pct" data-row="1">—</b>. Fans have a different pick: <b data-draw="poll-lead" data-source="fan_vote" data-field="player" data-row="0">—</b> leads the official Heisman fan vote.</p>
+      <nav class="hz-actions" aria-label="Sections">
+        <a class="hz-pill" href="#overall-odds">The odds</a>
+        <a class="hz-pill" href="#best-odds">Best prices</a>
+        <a class="hz-pill" href="#fan-votes">Fan vote</a>
+        <a class="hz-pill" href="#x-buzz">Buzz on X</a>
+        <a class="hz-pill" href="#overall-stats">Season stats</a>
+      </nav>
+      <div class="hz-stats" id="tiles">
+        <div class="hz-stat" id="tile-favorite">
+          <span class="hz-stat-label">Odds favorite</span>
+          <span class="hz-stat-name" data-draw="t1-name" data-source="consensus" data-field="player" data-row="0">—</span>
+          <span class="hz-stat-val" data-draw="t1-pct" data-source="consensus" data-field="consensus_pct" data-row="0">—</span>
+          <span class="hz-stat-sub">Average implied chance</span>
+        </div>
+        <div class="hz-stat" id="tile-second">
+          <span class="hz-stat-label">Runner-up</span>
+          <span class="hz-stat-name" data-draw="t2-name" data-source="consensus" data-field="player" data-row="1">—</span>
+          <span class="hz-stat-val" data-draw="t2-pct" data-source="consensus" data-field="consensus_pct" data-row="1">—</span>
+          <span class="hz-stat-sub">Average implied chance</span>
+        </div>
+        <div class="hz-stat" id="tile-third">
+          <span class="hz-stat-label">Third</span>
+          <span class="hz-stat-name" data-draw="t3-name" data-source="consensus" data-field="player" data-row="2">—</span>
+          <span class="hz-stat-val" data-draw="t3-pct" data-source="consensus" data-field="consensus_pct" data-row="2">—</span>
+          <span class="hz-stat-sub">Average implied chance</span>
+        </div>
+        <div class="hz-stat" id="tile-poll">
+          <span class="hz-stat-label">Fan vote No. 1</span>
+          <span class="hz-stat-name" data-draw="t4-name" data-source="fan_vote" data-field="player" data-row="0">—</span>
+          <span class="hz-stat-val" data-draw="t4-team" data-source="fan_vote" data-field="team" data-row="0">—</span>
+          <span class="hz-stat-sub">Heisman Hopefuls Fan Vote</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hz-strip hz-ph-stadium" role="img" aria-label="Packed college football stadium under floodlights at night"><p class="hz-strip-cap" aria-hidden="true">saturday night lights</p></div>
+
+  <section class="hz-band hz-dark" id="overall-odds">
+    <div class="hz-inner">
+      <div class="hz-title">
+        <p class="hz-label">Overall odds of winning</p>
+        <p class="hz-big" style="--chars: 8" aria-hidden="true">The odds</p>
+      </div>
+      <h2 class="hz-sub">Who the markets think lifts the trophy</h2>
+      <p class="hz-note">Each bar is the average implied chance from every source that prices the player: FanDuel, Kalshi, Polymarket and the average sportsbook line. Dots show each source on its own. Sportsbook figures include the book's margin, so they add up to more than 100%.</p>
+      <div class="hz-legend" id="odds-legend">
+        <span><i class="hz-bar" style="background: var(--fg)"></i>Consensus</span>
+        <span><i style="background: var(--s2)"></i>FanDuel</span>
+        <span><i style="background: var(--s3)"></i>Kalshi</span>
+        <span><i style="background: var(--s4)"></i>Polymarket</span>
+        <span><i style="background: var(--s5)"></i>Sportsbook average</span>
+      </div>
+      <div class="hz-chart" id="odds-chart" data-draw="odds-chart" data-source="consensus"></div>
+      <div class="hz-col" id="odds-trend">
+        <h3 class="hz-h3">how the odds have moved</h3>
+        <p class="hz-note">Implied chance over the season. Points through Nov 8 are the average sportsbook line; later points are the multi-source consensus, added once a day.</p>
+        <div class="hz-chart" id="trend-chart" data-draw="trend-chart" data-source="odds_history"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hz-strip hz-ph-ball" role="img" aria-label="Football resting on the goal line under stadium lights"><p class="hz-strip-cap" aria-hidden="true">every yard counts</p></div>
+
+  <section class="hz-band hz-cream" id="best-odds">
+    <div class="hz-inner">
+      <div class="hz-title">
+        <p class="hz-label">Leaders by best odds</p>
+        <p class="hz-big" style="--chars: 9" aria-hidden="true">The board</p>
+      </div>
+      <p class="hz-note">American odds: +200 means a $100 bet returns $200 profit. The best price in each column is highlighted. A dash means that source doesn't list the player.</p>
+      <div class="hz-wrap">
+        <table class="hz-table" data-source="odds" data-row-key="player" id="odds-table">
+          <thead><tr>
+            <th data-source="consensus" data-field="rank">#</th>
+            <th class="hz-l" data-field="player">Player</th>
+            <th class="hz-l" data-field="team">Team</th>
+            <th data-field="fanduel">FanDuel</th>
+            <th data-field="book_avg">Book avg</th>
+            <th data-field="kalshi_pct">Kalshi</th>
+            <th data-field="polymarket_pct">Polymarket</th>
+            <th data-source="consensus" data-field="consensus_pct">Consensus</th>
+          </tr></thead>
+          <tbody data-draw="odds-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="hz-strip hz-ph-crowd" role="img" aria-label="Student section celebrating under the lights"><p class="hz-strip-cap" aria-hidden="true">the people have spoken</p></div>
+
+  <section class="hz-band hz-sand" id="fan-votes">
+    <div class="hz-inner">
+      <div class="hz-title">
+        <p class="hz-label">Leaders by fan votes</p>
+        <p class="hz-big" style="--chars: 8" aria-hidden="true">The fans</p>
+      </div>
+      <p class="hz-note">The official Heisman Hopefuls Fan Vote. Fans rank three players once a day at hopefuls.heisman.com, and the result counts as one of the 931 official ballots. The Heisman Trust posts standings on X: a top three midweek and a top ten after each week's games.</p>
+      <div class="hz-podium" id="fan-podium" data-draw="fan-podium" data-source="fan_vote"></div>
+      <div class="hz-two">
+        <div class="hz-col" id="fan-week10">
+          <h3 class="hz-h3">week 10 leaderboard · nov 10</h3>
+          <div class="hz-wrap">
+            <table class="hz-table" data-source="fan_vote" data-row-key="board,player" id="fan-table">
+              <thead><tr>
+                <th data-field="rank">Rank</th>
+                <th class="hz-l" data-field="player">Player</th>
+                <th class="hz-l" data-field="team">Team</th>
+                <th data-field="spots_up">Move</th>
+              </tr></thead>
+              <tbody data-draw="fan-rows"></tbody>
+            </table>
+          </div>
+          <p class="hz-note">Move shows spots climbed that week, where the Heisman graphic shows one. Players in bold are among the seven odds favorites.</p>
+        </div>
+        <div class="hz-col" id="poll-week10">
+          <h3 class="hz-h3">writers' weekly poll · after week 10</h3>
+          <div class="hz-wrap">
+            <table class="hz-table" data-source="poll" data-row-key="player" id="poll-table">
+              <thead><tr>
+                <th data-field="rank">Rank</th>
+                <th class="hz-l" data-field="player">Player</th>
+                <th class="hz-l" data-field="team">Team</th>
+                <th class="hz-l" data-field="pos">Pos</th>
+              </tr></thead>
+              <tbody data-draw="poll-rows"></tbody>
+            </table>
+          </div>
+          <p class="hz-note">Last Word on Sports weighted poll (5 points for a first-place vote, 4 for second, and so on), for comparison with the fans.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hz-band hz-dark" id="x-buzz">
+    <div class="hz-inner">
+      <div class="hz-title">
+        <p class="hz-label">Buzz on X</p>
+        <p class="hz-big" style="--chars: 8" aria-hidden="true">The buzz</p>
+      </div>
+      <div class="hz-row">
+        <p class="hz-note">The most-engaged Heisman posts on X this week from teams, media outlets and reporters, summarized in a line each. Engagement is likes plus reposts plus replies.</p>
+        <select class="dash-select" id="x-sort" aria-label="Sort posts">
+          <option value="engagement">Most engagement</option>
+          <option value="newest">Newest</option>
+          <option value="views">Most views</option>
+        </select>
+      </div>
+      <div class="hz-posts" id="x-posts" data-draw="x-posts" data-source="x_posts"></div>
+    </div>
+  </section>
+
+  <div class="hz-strip hz-ph-qb" role="img" aria-label="Quarterback releasing a pass during a night game"><p class="hz-strip-cap" aria-hidden="true">the receipts</p></div>
+
+  <section class="hz-band hz-cream" id="overall-stats">
+    <div class="hz-inner">
+      <div class="hz-title">
+        <p class="hz-label">Overall season stats</p>
+        <p class="hz-big" style="--chars: 11" aria-hidden="true">The numbers</p>
+      </div>
+      <p class="hz-note">Season totals, ordered by consensus odds. Total TD counts passing, rushing and receiving touchdowns. A dash means the stat wasn't reported.</p>
+      <div class="hz-wrap">
+        <table class="hz-table" data-source="stats" data-row-key="player" id="stats-table">
+          <thead><tr>
+            <th class="hz-l" data-field="player">Player</th>
+            <th class="hz-l" data-field="pos">Pos</th>
+            <th class="hz-l" data-field="team">Team</th>
+            <th data-field="record">Record</th>
+            <th data-field="games">G</th>
+            <th data-field="pass_yds">Pass yds</th>
+            <th data-field="pass_td">Pass TD</th>
+            <th data-field="int">INT</th>
+            <th data-source="statline" data-field="cmp_pct">Cmp %</th>
+            <th data-field="rush_yds">Rush yds</th>
+            <th data-field="rush_td">Rush TD</th>
+            <th data-field="rec">Rec</th>
+            <th data-field="rec_yds">Rec yds</th>
+            <th data-field="rec_td">Rec TD</th>
+            <th data-source="statline" data-field="total_td">Total TD</th>
+          </tr></thead>
+          <tbody data-draw="stats-rows"></tbody>
+        </table>
+      </div>
+      <div class="hz-col" id="yards-chart-sec">
+        <h3 class="hz-h3">yards and touchdowns per game</h3>
+        <div class="hz-chart" id="ypg-chart" data-draw="ypg-chart" data-source="statline"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="hz-band hz-foot-band" id="sources-band">
+    <div class="hz-inner">
+      <details class="hz-foot" id="sources-notes">
+        <summary>where these numbers come from</summary>
+        <ul>
+          <li>FanDuel prices: TSN, Nov 13. Kalshi: Covers, Nov 11. Polymarket: On3, after Week 10. Sportsbook average: SportsBettingDime, Nov 9.</li>
+          <li>Season stats: ESPN game logs, Sports-Reference and game reports through Week 10. Team records from the Week 11 AP poll and game reports.</li>
+          <li>Fan vote: Heisman Trust graphics posted on X (Week 10 leaderboard Nov 10, top three Nov 12).</li>
+          <li>Writers' poll: Last Word on Sports, after Week 10.</li>
+          <li>Buzz on X: X search for Heisman posts with 100+ likes, limited to team, media and reporter accounts. Counts were captured when the list was built; summaries are ours.</li>
+          <li>Photos: original images generated with Figma AI for this page; they show no real players.</li>
+          <li>This site is a snapshot. The numbers live in the <code>data/</code> folder as JSON; update those files to refresh the page.</li>
+        </ul>
+      </details>
+      <p class="hz-foot-line">Independent fan dashboard. Not affiliated with the Heisman Trophy Trust.</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+window.hz = (function () {
+  const has = (v) => v !== null && v !== undefined && v !== '' && !isNaN(+v);
+  const pct = (v) => has(v) ? (+v).toFixed(1) + '%' : '—';
+  const am = (v) => has(v) ? ((+v > 0 ? '+' : '') + d3.format(',')(+v)) : '—';
+  const num = (v) => has(v) ? d3.format(',')(+v) : '—';
+  const series = (i) => 'var(--s' + ((i % 7) + 1) + ')';
+  function state(el, d) { el.classList.toggle('dash-skeleton', d.status === 'loading'); }
+  function field(name, id, row, key, fmt) {
+    dash.draw(name, (el) => {
+      const d = dash.data(id);
+      state(el, d);
+      const r = d.status === 'ok' && Array.isArray(d.data) ? d.data[row] : null;
+      el.textContent = r && r[key] !== undefined && r[key] !== null ? (fmt ? fmt(r[key]) : String(r[key])) : '—';
+    });
+  }
+  function tipAt(tip, el, ev) {
+    const [x, y] = d3.pointer(ev, el);
+    tip.hidden = false;
+    tip.style.left = Math.min(Math.max(0, x + 12), el.clientWidth - tip.offsetWidth) + 'px';
+    tip.style.top = (y + 14) + 'px';
+  }
+  return { has, pct, am, num, series, state, field, tipAt };
+})();
+</script>
+
+<script>
+/* Keep each giant section word inside the content width: measure, then shrink. Only sets style. */
+(function () {
+  const fit = () => {
+    document.querySelectorAll('.hz-big').forEach((el) => {
+      el.style.fontSize = '';
+      const avail = el.clientWidth;
+      const need = el.scrollWidth;
+      if (avail > 0 && need > avail) {
+        const cur = parseFloat(getComputedStyle(el).fontSize) || 0;
+        if (cur) el.style.fontSize = Math.floor(cur * (avail / need) * 0.98) + 'px';
+      }
+    });
+  };
+  dash.onData(fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('resize', fit);
+})();
+</script>
+
+<script>
+dash.calc('consensus', {
+  inputs: ['odds'],
+  title: 'Consensus win chance',
+  description: 'Average of the implied chances from each odds source that lists the player, ranked high to low.',
+  fn: (odds) => {
+    const implied = (a) => {
+      if (a === null || a === undefined || a === '') return null;
+      const n = +a;
+      if (isNaN(n)) return null;
+      return n > 0 ? 10000 / (n + 100) : (100 * -n) / (-n + 100);
+    };
+    const val = (v) => (v === null || v === undefined || v === '' || isNaN(+v) ? null : +v);
+    const round = (v) => (v === null ? null : Math.round(v * 10) / 10);
+    return odds
+      .map((r) => {
+        const fd = implied(r.fanduel);
+        const bk = implied(r.book_avg);
+        const ka = val(r.kalshi_pct);
+        const pm = val(r.polymarket_pct);
+        const vals = [fd, ka, pm, bk].filter((x) => x !== null);
+        const avg = vals.length ? vals.reduce((s, x) => s + x, 0) / vals.length : null;
+        return { player: r.player, team: r.team, fanduel_pct: round(fd), kalshi_pct: ka, polymarket_pct: pm, book_pct: round(bk), consensus_pct: round(avg), sources: vals.length };
+      })
+      .sort((a, b) => (b.consensus_pct ?? -1) - (a.consensus_pct ?? -1))
+      .map((r, i) => Object.assign({ rank: i + 1 }, r));
+  },
+});
+
+dash.calc('statline', {
+  inputs: ['stats', 'consensus'],
+  title: 'Derived stat line',
+  description: 'Completion rate, total touchdowns and yards per game from the season totals, ordered by consensus odds.',
+  fn: (stats, consensus) => {
+    const n = (v) => (v === null || v === undefined || v === '' || isNaN(+v) ? 0 : +v);
+    const order = new Map((consensus || []).map((r) => [r.player, r.rank]));
+    return stats
+      .map((r) => {
+        const g = n(r.games) || 1;
+        return {
+          player: r.player,
+          rank: order.get(r.player) ?? 99,
+          cmp_pct: n(r.att) > 0 ? Math.round((1000 * n(r.cmp)) / n(r.att)) / 10 : null,
+          total_td: n(r.pass_td) + n(r.rush_td) + n(r.rec_td),
+          pass_ypg: Math.round((10 * n(r.pass_yds)) / g) / 10,
+          rush_ypg: Math.round((10 * n(r.rush_yds)) / g) / 10,
+          rec_ypg: Math.round((10 * n(r.rec_yds)) / g) / 10,
+        };
+      })
+      .sort((a, b) => a.rank - b.rank);
+  },
+});
+</script>
+
+<script>
+(function () {
+  const { pct, field } = window.hz;
+  field('lead-name', 'consensus', 0, 'player');
+  field('lead-pct', 'consensus', 0, 'consensus_pct', pct);
+  field('second-name', 'consensus', 1, 'player');
+  field('second-pct', 'consensus', 1, 'consensus_pct', pct);
+  field('poll-lead', 'fan_vote', 0, 'player');
+  field('t1-name', 'consensus', 0, 'player');
+  field('t1-pct', 'consensus', 0, 'consensus_pct', pct);
+  field('t2-name', 'consensus', 1, 'player');
+  field('t2-pct', 'consensus', 1, 'consensus_pct', pct);
+  field('t3-name', 'consensus', 2, 'player');
+  field('t3-pct', 'consensus', 2, 'consensus_pct', pct);
+  field('t4-name', 'fan_vote', 0, 'player');
+  field('t4-team', 'fan_vote', 0, 'team');
+})();
+</script>
+
+<script>
+/* Overall odds chart */
+dash.draw('odds-chart', (el) => {
+  const H = window.hz;
+  const d = dash.data('consensus');
+  H.state(el, d);
+  el.replaceChildren();
+  if (d.status === 'error') { const f = document.createElement('div'); f.className = 'hz-fail'; f.textContent = 'Failed to load'; el.append(f); return; }
+  if (d.status !== 'ok' || !Array.isArray(d.data) || !d.data.length) return;
+  const rows = d.data;
+  const W = Math.max(280, el.clientWidth);
+  const rowH = 44, top = 8, bottom = 26;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('role', 'img')
+    .attr('aria-label', 'Bar chart of each candidate\'s consensus chance to win the Heisman, with dots for each odds source');
+  const lbl = svg.append('g');
+  const names = lbl.selectAll('text').data(rows).join('text').attr('class', 'hz-lbl').text((r) => r.player);
+  const left = Math.ceil(d3.max(names.nodes(), (n) => n.getComputedTextLength()) || 100) + 16;
+  const right = 56;
+  const maxV = d3.max(rows, (r) => d3.max([r.consensus_pct, r.fanduel_pct, r.kalshi_pct, r.polymarket_pct, r.book_pct].filter((v) => v !== null))) || 10;
+  const x = d3.scaleLinear().domain([0, Math.ceil(maxV / 5) * 5]).range([left, W - right]);
+  const H2 = top + rows.length * rowH + bottom;
+  svg.attr('viewBox', `0 0 ${W} ${H2}`).attr('height', H2);
+  const y = (i) => top + i * rowH;
+  svg.insert('g', ':first-child').attr('transform', `translate(0,${H2 - bottom})`)
+    .call(d3.axisBottom(x).ticks(W < 480 ? 4 : 6).tickFormat((v) => v + '%').tickSize(-(H2 - bottom - top)))
+    .call((g) => g.select('.domain').remove());
+  names.attr('x', 0).attr('y', (r, i) => y(i) + rowH / 2).attr('dy', '0.35em');
+  svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', left).attr('y', (r, i) => y(i) + 10).attr('height', rowH - 20)
+    .attr('width', (r) => Math.max(0, x(r.consensus_pct || 0) - left))
+    .attr('rx', (rowH - 20) / 2).style('fill', 'var(--s1)').style('opacity', (r, i) => (i === 0 ? 1 : 0.82));
+  const keys = [['fanduel_pct', 2], ['kalshi_pct', 3], ['polymarket_pct', 4], ['book_pct', 5]];
+  const dots = [];
+  rows.forEach((r, i) => keys.forEach(([k, s]) => { if (r[k] !== null && r[k] !== undefined) dots.push({ i, v: r[k], s }); }));
+  svg.append('g').selectAll('circle').data(dots).join('circle')
+    .attr('cx', (p) => x(p.v)).attr('cy', (p) => y(p.i) + rowH / 2).attr('r', 5)
+    .style('fill', (p) => 'var(--s' + p.s + ')').style('stroke', 'var(--bg)').style('stroke-width', 1.5);
+  svg.append('g').selectAll('line').data(rows).join('line')
+    .attr('x1', (r) => x(r.consensus_pct || 0)).attr('x2', (r) => x(r.consensus_pct || 0))
+    .attr('y1', (r, i) => y(i) + 5).attr('y2', (r, i) => y(i) + rowH - 5)
+    .style('stroke', 'var(--fg)').style('stroke-width', 2.5);
+  svg.append('g').selectAll('text').data(rows).join('text').attr('class', 'hz-val')
+    .attr('y', (r, i) => y(i) + rowH / 2).attr('dy', '0.35em')
+    .text((r) => H.pct(r.consensus_pct))
+    .each(function (r) {
+      const len = this.getComputedTextLength();
+      const maxDot = d3.max(keys.map(([k]) => r[k]).filter((v) => v !== null && v !== undefined)) || 0;
+      const start = Math.max(x(r.consensus_pct || 0), x(maxDot)) + 10;
+      d3.select(this).attr('x', Math.min(start, W - len - 2));
+    });
+  const tip = document.createElement('div');
+  tip.className = 'hz-tip'; tip.hidden = true; el.append(tip);
+  svg.append('g').selectAll('rect').data(rows).join('rect')
+    .attr('x', 0).attr('y', (r, i) => y(i)).attr('width', W).attr('height', rowH)
+    .style('fill', 'transparent')
+    .on('pointermove', (ev, r) => {
+      tip.replaceChildren();
+      const s = document.createElement('strong'); s.textContent = r.player + ' · ' + r.team; tip.append(s);
+      [['Consensus', r.consensus_pct], ['FanDuel', r.fanduel_pct], ['Kalshi', r.kalshi_pct], ['Polymarket', r.polymarket_pct], ['Sportsbook avg', r.book_pct]].forEach(([n, v]) => {
+        const line = document.createElement('div'); line.textContent = n + ': ' + H.pct(v); tip.append(line);
+      });
+      H.tipAt(tip, el, ev);
+    })
+    .on('pointerleave', () => { tip.hidden = true; });
+});
+</script>
+
+<script>
+/* Odds table */
+dash.draw('odds-rows', (tb) => {
+  const H = window.hz;
+  const o = dash.data('odds'), c = dash.data('consensus');
+  tb.replaceChildren();
+  if (o.status !== 'ok' || c.status !== 'ok' || !Array.isArray(c.data)) return;
+  const byP = new Map(o.data.map((r) => [r.player, r]));
+  const best = (k, lowWins) => {
+    const vals = o.data.map((r) => r[k]).filter(H.has).map(Number);
+    return vals.length ? (lowWins ? d3.min(vals) : d3.max(vals)) : null;
+  };
+  const bFd = best('fanduel', true), bBk = best('book_avg', true), bKa = best('kalshi_pct'), bPm = best('polymarket_pct');
+  const cls = (v, b) => (H.has(v) ? (+v === b ? 'hz-best' : '') : 'hz-muted');
+  c.data.forEach((cr) => {
+    const r = byP.get(cr.player); if (!r) return;
+    const tr = document.createElement('tr');
+    const cell = (txt, cl) => { const td = document.createElement('td'); td.textContent = txt; if (cl) td.className = cl; tr.append(td); };
+    cell(String(cr.rank));
+    cell(r.player, 'hz-name');
+    cell(r.team, 'hz-l hz-muted');
+    cell(H.am(r.fanduel), cls(r.fanduel, bFd));
+    cell(H.am(r.book_avg), cls(r.book_avg, bBk));
+    cell(H.has(r.kalshi_pct) ? (+r.kalshi_pct) + '%' : '—', cls(r.kalshi_pct, bKa));
+    cell(H.has(r.polymarket_pct) ? (+r.polymarket_pct) + '%' : '—', cls(r.polymarket_pct, bPm));
+    cell(H.pct(cr.consensus_pct));
+    tb.append(tr);
+  });
+});
+
+/* Poll table */
+dash.draw('poll-rows', (tb) => {
+  const p = dash.data('poll');
+  tb.replaceChildren();
+  if (p.status !== 'ok' || !Array.isArray(p.data)) return;
+  p.data.forEach((r) => {
+    const tr = document.createElement('tr');
+    [String(r.rank), r.player, r.team, r.pos].forEach((t, i) => {
+      const td = document.createElement('td'); td.textContent = t ?? '—';
+      td.className = i === 0 ? '' : i === 1 ? 'hz-name' : 'hz-l hz-muted';
+      tr.append(td);
+    });
+    tb.append(tr);
+  });
+});
+
+/* Stats table */
+dash.draw('stats-rows', (tb) => {
+  const H = window.hz;
+  const s = dash.data('stats'), l = dash.data('statline');
+  tb.replaceChildren();
+  if (s.status !== 'ok' || l.status !== 'ok' || !Array.isArray(l.data)) return;
+  const byP = new Map(s.data.map((r) => [r.player, r]));
+  l.data.forEach((lr) => {
+    const r = byP.get(lr.player); if (!r) return;
+    const tr = document.createElement('tr');
+    const cell = (txt, cl) => { const td = document.createElement('td'); td.textContent = txt; if (cl) td.className = cl; tr.append(td); };
+    const n = (v) => { const t = H.num(v); cell(t, t === '—' ? 'hz-muted' : ''); };
+    cell(r.player, 'hz-name'); cell(r.pos, 'hz-l hz-muted'); cell(r.team, 'hz-l hz-muted'); cell(r.record ?? '—');
+    n(r.games); n(r.pass_yds); n(r.pass_td); n(r.int);
+    cell(lr.cmp_pct === null ? '—' : lr.cmp_pct.toFixed(1), lr.cmp_pct === null ? 'hz-muted' : '');
+    n(r.rush_yds); n(r.rush_td); n(r.rec); n(r.rec_yds); n(r.rec_td);
+    cell(String(lr.total_td), 'hz-best');
+    tb.append(tr);
+  });
+});
+</script>
+
+<script>
+/* Fan vote podium, fan table, X posts */
+(function () {
+  const H = window.hz;
+  const favs = () => {
+    const o = dash.data('odds');
+    return new Set(o.status === 'ok' && Array.isArray(o.data) ? o.data.map((r) => r.player) : []);
+  };
+  const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt !== undefined) e.textContent = txt; return e; };
+  const mark = (e, src, fld, i) => { e.setAttribute('data-source', src); e.setAttribute('data-field', fld); e.setAttribute('data-row', String(i)); return e; };
+
+  dash.draw('fan-podium', (el) => {
+    const d = dash.data('fan_vote');
+    H.state(el, d);
+    el.replaceChildren();
+    if (d.status === 'error') { el.append(mk('div', 'hz-fail', 'Failed to load')); return; }
+    if (d.status !== 'ok' || !Array.isArray(d.data)) return;
+    d.data.forEach((r, i) => {
+      if (r.board !== 'latest') return;
+      const c = mk('div', 'hz-podium-card');
+      const sub = [r.pos, r.team].filter(Boolean).join(' · ') + (r.as_of ? ' · as of ' + d3.utcFormat('%b %-d')(new Date(r.as_of + 'T00:00:00Z')) : '');
+      c.append(mark(mk('span', 'hz-podium-rank', String(r.rank)), 'fan_vote', 'rank', i), mark(mk('span', 'hz-podium-name', r.player), 'fan_vote', 'player', i), mk('span', 'hz-podium-sub', sub));
+      el.append(c);
+    });
+  });
+
+  dash.draw('fan-rows', (tb) => {
+    const d = dash.data('fan_vote');
+    tb.replaceChildren();
+    if (d.status !== 'ok' || !Array.isArray(d.data)) return;
+    const f = favs();
+    d.data.filter((r) => r.board === 'week10').forEach((r) => {
+      const tr = document.createElement('tr');
+      tr.setAttribute('data-key', 'week10,' + encodeURIComponent(r.player));
+      tr.append(mk('td', '', String(r.rank)));
+      tr.append(mk('td', 'hz-name' + (f.has(r.player) ? ' hz-fav' : ''), r.player));
+      tr.append(mk('td', 'hz-l hz-muted', r.team));
+      tr.append(mk('td', H.has(r.spots_up) ? 'hz-up' : 'hz-muted', H.has(r.spots_up) ? '▲ ' + r.spots_up : '—'));
+      tb.append(tr);
+    });
+  });
+
+  window.hz.xSort = 'engagement';
+  document.querySelectorAll('#x-sort').forEach((s) => {
+    s.addEventListener('change', () => { window.hz.xSort = s.value; dash.draw('x-posts'); });
+  });
+
+  dash.draw('x-posts', (el) => {
+    const d = dash.data('x_posts');
+    H.state(el, d);
+    el.replaceChildren();
+    if (d.status === 'error') { el.append(mk('div', 'hz-fail', 'Failed to load')); return; }
+    if (d.status !== 'ok' || !Array.isArray(d.data)) return;
+    const key = window.hz.xSort || 'engagement';
+    const items = d.data.map((r, i) => ({ r, i }));
+    items.sort((a, b) => key === 'newest'
+      ? String(b.r.posted).localeCompare(String(a.r.posted))
+      : (+b.r[key] || 0) - (+a.r[key] || 0));
+    const fmtD = (s) => { const t = new Date(String(s).length <= 10 ? s + 'T12:00:00Z' : s); return isNaN(t) ? '' : d3.utcFormat('%b %-d')(t); };
+    const compact = (v) => (H.has(v) ? d3.format(+v >= 10000 ? '.3~s' : ',')(+v).replace('G', 'B') : '—');
+    items.forEach(({ r, i }) => {
+      const card = mk('article', 'hz-post');
+      const head = mk('div', 'hz-post-head');
+      const who = mk('span');
+      who.append(mk('b', '', r.account), document.createTextNode(' ' + (r.handle || '')));
+      head.append(who, mk('span', '', fmtD(r.posted)));
+      card.append(head);
+      if (r.about) card.append(mk('span', 'hz-chip', r.about));
+      card.append(mark(mk('p', '', r.summary || ''), 'x_posts', 'summary', i));
+      const m = mk('div', 'hz-metrics');
+      [['likes', 'likes'], ['reposts', 'reposts'], ['replies', 'replies'], ['views', 'views']].forEach(([k, label]) => {
+        const s = mk('span');
+        s.append(mark(mk('b', '', compact(r[k])), 'x_posts', k, i), document.createTextNode(' ' + label));
+        m.append(s);
+      });
+      card.append(m);
+      if (/^https:\/\/x\.com\//.test(String(r.url || ''))) {
+        const a = mk('a', '', 'Open on X →');
+        a.href = r.url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        card.append(a);
+      }
+      el.append(card);
+    });
+  });
+})();
+</script>
+
+<script>
+/* Trend chart */
+dash.draw('trend-chart', (el) => {
+  const H = window.hz;
+  const d = dash.data('odds_history');
+  const c = dash.data('consensus');
+  H.state(el, d);
+  el.replaceChildren();
+  if (d.status === 'error') { const f = document.createElement('div'); f.className = 'hz-fail'; f.textContent = 'Failed to load'; el.append(f); return; }
+  if (d.status !== 'ok' || !Array.isArray(d.data) || !d.data.length) return;
+  const parse = d3.utcParse('%Y-%m-%d');
+  const pts = d.data.map((r) => ({ date: parse(String(r.date).slice(0, 10)), player: r.player, pct: +r.pct, source: r.source })).filter((p) => p.date && !isNaN(p.pct));
+  const order = c.status === 'ok' && Array.isArray(c.data) ? c.data.map((r) => r.player) : [];
+  const players = Array.from(new Set(pts.map((p) => p.player))).sort((a, b) => (order.indexOf(a) + 1 || 99) - (order.indexOf(b) + 1 || 99));
+  const col = (p) => H.series(players.indexOf(p));
+  const legend = document.createElement('div'); legend.className = 'hz-legend';
+  players.forEach((p) => { const s = document.createElement('span'); const i = document.createElement('i'); i.style.background = col(p); s.append(i, document.createTextNode(p)); legend.append(s); });
+  el.append(legend);
+  const W = Math.max(280, el.clientWidth), Hh = 280, m = { t: 16, r: 16, b: 28, l: 40 };
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${Hh}`).attr('height', Hh)
+    .attr('role', 'img').attr('aria-label', 'Line chart of each candidate\'s implied Heisman chance over the 2026 season');
+  const x = d3.scaleUtc().domain(d3.extent(pts, (p) => p.date)).range([m.l, W - m.r]);
+  const y = d3.scaleLinear().domain([0, Math.ceil((d3.max(pts, (p) => p.pct) || 10) / 10) * 10]).range([Hh - m.b, m.t]);
+  svg.append('g').attr('transform', `translate(0,${Hh - m.b})`).call(d3.axisBottom(x).ticks(W < 480 ? 4 : 8).tickFormat(d3.utcFormat('%b')));
+  svg.append('g').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat((v) => v + '%').tickSize(-(W - m.l - m.r)))
+    .call((g) => g.select('.domain').remove());
+  const line = d3.line().x((p) => x(p.date)).y((p) => y(p.pct));
+  const groups = d3.group(pts, (p) => p.player);
+  players.forEach((p) => {
+    const g = (groups.get(p) || []).slice().sort((a, b) => a.date - b.date);
+    svg.append('path').datum(g).attr('d', line).style('fill', 'none').style('stroke', col(p)).style('stroke-width', 2.5);
+    svg.append('g').selectAll('circle').data(g).join('circle').attr('cx', (q) => x(q.date)).attr('cy', (q) => y(q.pct))
+      .attr('r', (q, i) => (i === g.length - 1 ? 5 : 3)).style('fill', col(p)).style('stroke', 'var(--bg)').style('stroke-width', 1.5);
+  });
+  const tip = document.createElement('div'); tip.className = 'hz-tip'; tip.hidden = true; el.append(tip);
+  const del = d3.Delaunay.from(pts, (p) => x(p.date), (p) => y(p.pct));
+  const fmt = d3.utcFormat('%b %-d');
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', Hh - m.t - m.b).style('fill', 'transparent')
+    .on('pointermove', (ev) => {
+      const [sx, sy] = d3.pointer(ev, svg.node());
+      const p = pts[del.find(sx, sy)];
+      if (!p) return;
+      tip.replaceChildren();
+      const s = document.createElement('strong'); s.textContent = p.player; tip.append(s);
+      const a = document.createElement('div'); a.textContent = fmt(p.date) + ': ' + H.pct(p.pct); tip.append(a);
+      const b = document.createElement('div'); b.textContent = p.source || ''; tip.append(b);
+      H.tipAt(tip, el, ev);
+    })
+    .on('pointerleave', () => { tip.hidden = true; });
+});
+</script>
+
+<script>
+/* Yards per game chart */
+dash.draw('ypg-chart', (el) => {
+  const H = window.hz;
+  const d = dash.data('statline');
+  H.state(el, d);
+  el.replaceChildren();
+  if (d.status === 'error') { const f = document.createElement('div'); f.className = 'hz-fail'; f.textContent = 'Failed to load'; el.append(f); return; }
+  if (d.status !== 'ok' || !Array.isArray(d.data) || !d.data.length) return;
+  const rows = d.data;
+  const parts = [['pass_ypg', 'Passing', 0], ['rush_ypg', 'Rushing', 2], ['rec_ypg', 'Receiving', 3]];
+  const legend = document.createElement('div'); legend.className = 'hz-legend';
+  parts.forEach(([, n, ci]) => { const s = document.createElement('span'); const i = document.createElement('i'); i.style.background = H.series(ci); s.append(i, document.createTextNode(n + ' yds/game')); legend.append(s); });
+  el.append(legend);
+  const W = Math.max(280, el.clientWidth), rowH = 40, top = 10, bottom = 26;
+  const Hh = top + rows.length * rowH + bottom;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${Hh}`).attr('height', Hh)
+    .attr('role', 'img').attr('aria-label', 'Stacked bars of passing, rushing and receiving yards per game, with total touchdowns');
+  const names = svg.append('g').selectAll('text').data(rows).join('text').attr('class', 'hz-lbl').text((r) => r.player);
+  const left = Math.ceil(d3.max(names.nodes(), (n) => n.getComputedTextLength()) || 100) + 16;
+  const right = 64;
+  const total = (r) => (r.pass_ypg || 0) + (r.rush_ypg || 0) + (r.rec_ypg || 0);
+  const x = d3.scaleLinear().domain([0, (d3.max(rows, total) || 1) * 1.02]).range([left, W - right]).nice();
+  svg.insert('g', ':first-child').attr('transform', `translate(0,${Hh - bottom})`)
+    .call(d3.axisBottom(x).ticks(W < 480 ? 3 : 6).tickSize(-(Hh - bottom - top)))
+    .call((g) => g.select('.domain').remove());
+  names.attr('x', 0).attr('y', (r, i) => top + i * rowH + rowH / 2).attr('dy', '0.35em');
+  const tip = document.createElement('div'); tip.className = 'hz-tip'; tip.hidden = true; el.append(tip);
+  rows.forEach((r, i) => {
+    let acc = 0;
+    parts.forEach(([k, , ci]) => {
+      const v = r[k] || 0; if (!v) return;
+      svg.append('rect').attr('x', x(acc)).attr('y', top + i * rowH + 10).attr('height', rowH - 20).attr('width', Math.max(0, x(acc + v) - x(acc)))
+        .style('fill', H.series(ci));
+      acc += v;
+    });
+    svg.append('text').attr('class', 'hz-val').attr('x', x(acc) + 10).attr('y', top + i * rowH + rowH / 2).attr('dy', '0.35em').text(r.total_td + ' td');
+    svg.append('rect').attr('x', 0).attr('y', top + i * rowH).attr('width', W).attr('height', rowH).style('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        tip.replaceChildren();
+        const s = document.createElement('strong'); s.textContent = r.player; tip.append(s);
+        [['Passing', r.pass_ypg], ['Rushing', r.rush_ypg], ['Receiving', r.rec_ypg]].forEach(([n, v]) => { if (v) { const l = document.createElement('div'); l.textContent = n + ': ' + v.toFixed(1) + ' yds/game'; tip.append(l); } });
+        const t = document.createElement('div'); t.textContent = 'Total TD: ' + r.total_td; tip.append(t);
+        H.tipAt(tip, el, ev);
+      })
+      .on('pointerleave', () => { tip.hidden = true; });
+  });
+});
+</script>
+
+</div>
+</body>
+</html>
