@@ -33,7 +33,7 @@ All figures come from the JSON files in [`data/`](data/):
 | `poll.json` | Writers' weekly poll top 5 |
 | `x_posts.json` | Popular posts on X with engagement counts and a one-line summary |
 
-Edit or replace a file and the page shows the new numbers on the next load. The consensus odds, completion %, total touchdowns and yards per game are worked out in the page from these files.
+These files are refreshed automatically: odds, stats and the writers' poll each morning, and X posts and the fan vote every three hours. Each refresh is a commit to this repo. You can also edit a file by hand; the page shows the new numbers on the next load. The consensus odds, completion %, total touchdowns and yards per game are worked out in the page from these files.
 
 ## Sources
 
