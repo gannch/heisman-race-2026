@@ -4,30 +4,30 @@
   "team": "Ohio State",
   "pos": "WR",
   "fanduel": -140,
-  "kalshi_pct": 60,
-  "polymarket_pct": 60,
+  "kalshi_pct": 63,
+  "polymarket_pct": 62,
   "book_avg": -100,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Darian Mensah",
   "team": "Miami",
   "pos": "QB",
   "fanduel": 370,
-  "kalshi_pct": 17,
-  "polymarket_pct": 15.5,
+  "kalshi_pct": 16,
+  "polymarket_pct": 15,
   "book_avg": 325,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Devon Dampier",
   "team": "Utah",
   "pos": "QB",
   "fanduel": 550,
-  "kalshi_pct": 11,
+  "kalshi_pct": 10,
   "polymarket_pct": 11,
   "book_avg": 3050,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "CJ Carr",
@@ -35,19 +35,19 @@
   "pos": "QB",
   "fanduel": 1100,
   "kalshi_pct": 5,
-  "polymarket_pct": 5.6,
+  "polymarket_pct": 5.5,
   "book_avg": 975,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Gunner Stockton",
   "team": "Georgia",
   "pos": "QB",
   "fanduel": 2500,
-  "kalshi_pct": 4,
-  "polymarket_pct": 3.6,
+  "kalshi_pct": 3,
+  "polymarket_pct": 3.1,
   "book_avg": 2650,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Sam Leavitt",
@@ -55,9 +55,9 @@
   "pos": "QB",
   "fanduel": null,
   "kalshi_pct": 1,
-  "polymarket_pct": 0.85,
+  "polymarket_pct": 0.9,
   "book_avg": 3500,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Keelon Russell",
@@ -65,8 +65,8 @@
   "pos": "QB",
   "fanduel": 4500,
   "kalshi_pct": 1,
-  "polymarket_pct": 0.95,
+  "polymarket_pct": 1,
   "book_avg": 5675,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  }
 ]

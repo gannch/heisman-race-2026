@@ -15,7 +15,7 @@
   "rec": 80,
   "rec_yds": 1317,
   "rec_td": 15,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Darian Mensah",
@@ -33,7 +33,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Devon Dampier",
@@ -51,7 +51,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "CJ Carr",
@@ -69,7 +69,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Gunner Stockton",
@@ -87,7 +87,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Sam Leavitt",
@@ -105,7 +105,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  },
  {
   "player": "Keelon Russell",
@@ -123,6 +123,6 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-18"
+  "as_of": "2026-11-19"
  }
 ]
