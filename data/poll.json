@@ -1,42 +1,42 @@
 [
  {
   "rank": 1,
-  "player": "Darian Mensah",
-  "team": "Miami",
-  "pos": "QB",
-  "poll": "Last Word on Sports weekly Heisman poll",
-  "week": "After Week 10"
- },
- {
-  "rank": 2,
-  "player": "CJ Carr",
-  "team": "Notre Dame",
-  "pos": "QB",
-  "poll": "Last Word on Sports weekly Heisman poll",
-  "week": "After Week 10"
- },
- {
-  "rank": 3,
   "player": "Jeremiah Smith",
   "team": "Ohio State",
   "pos": "WR",
   "poll": "Last Word on Sports weekly Heisman poll",
-  "week": "After Week 10"
+  "week": "After Week 11"
+ },
+ {
+  "rank": 2,
+  "player": "Darian Mensah",
+  "team": "Miami",
+  "pos": "QB",
+  "poll": "Last Word on Sports weekly Heisman poll",
+  "week": "After Week 11"
+ },
+ {
+  "rank": 3,
+  "player": "CJ Carr",
+  "team": "Notre Dame",
+  "pos": "QB",
+  "poll": "Last Word on Sports weekly Heisman poll",
+  "week": "After Week 11"
  },
  {
   "rank": 4,
+  "player": "Devon Dampier",
+  "team": "Utah",
+  "pos": "QB",
+  "poll": "Last Word on Sports weekly Heisman poll",
+  "week": "After Week 11"
+ },
+ {
+  "rank": 5,
   "player": "Jesse Legree",
   "team": "Oregon State",
   "pos": "WR",
   "poll": "Last Word on Sports weekly Heisman poll",
-  "week": "After Week 10"
- },
- {
-  "rank": 5,
-  "player": "Drew Mestemaker",
-  "team": "Oklahoma State",
-  "pos": "QB",
-  "poll": "Last Word on Sports weekly Heisman poll",
-  "week": "After Week 10"
+  "week": "After Week 11"
  }
 ]
