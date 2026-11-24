@@ -1,132 +1,15 @@
 [
- {
-  "board": "latest",
-  "rank": 1,
-  "player": "Desean Bishop",
-  "pos": "RB",
-  "team": "Tennessee",
-  "spots_up": 3,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "latest",
-  "rank": 2,
-  "player": "Jeremiah Smith",
-  "pos": "WR",
-  "team": "Ohio State",
-  "spots_up": 1,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "latest",
-  "rank": 3,
-  "player": "Malachi Toney",
-  "pos": "WR",
-  "team": "Miami",
-  "spots_up": null,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 1,
-  "player": "Desean Bishop",
-  "pos": "RB",
-  "team": "Tennessee",
-  "spots_up": 3,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 2,
-  "player": "Jeremiah Smith",
-  "pos": "WR",
-  "team": "Ohio State",
-  "spots_up": 1,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 3,
-  "player": "Malachi Toney",
-  "pos": "WR",
-  "team": "Miami",
-  "spots_up": null,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 4,
-  "player": "Arion Carter",
-  "pos": "LB",
-  "team": "Tennessee",
-  "spots_up": 7,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 5,
-  "player": "Darian Mensah",
-  "pos": "QB",
-  "team": "Miami",
-  "spots_up": null,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 6,
-  "player": "Devon Dampier",
-  "pos": "QB",
-  "team": "Utah",
-  "spots_up": null,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 7,
-  "player": "Gio Lopez",
-  "pos": "QB",
-  "team": "Wake Forest",
-  "spots_up": null,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 8,
-  "player": "Xavier Gilliam",
-  "pos": "DT",
-  "team": "Tennessee",
-  "spots_up": 11,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 9,
-  "player": "CJ Carr",
-  "pos": "QB",
-  "team": "Notre Dame",
-  "spots_up": 13,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- },
- {
-  "board": "week10",
-  "rank": 10,
-  "player": "Wayshawn Parker",
-  "pos": "RB",
-  "team": "Utah",
-  "spots_up": 5,
-  "as_of": "2026-11-17",
-  "post": "https://x.com/HeismanTrophy/status/2122707885935468723"
- }
+ {"board": "latest", "rank": 1, "player": "Desean Bishop", "pos": "RB", "team": "Tennessee", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "latest", "rank": 2, "player": "Jeremiah Smith", "pos": "WR", "team": "Ohio State", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "latest", "rank": 3, "player": "Devon Dampier", "pos": "QB", "team": "Utah", "spots_up": 2, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 1, "player": "Desean Bishop", "pos": "RB", "team": "Tennessee", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 2, "player": "Jeremiah Smith", "pos": "WR", "team": "Ohio State", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 3, "player": "Devon Dampier", "pos": "QB", "team": "Utah", "spots_up": 2, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 4, "player": "Arion Carter", "pos": "LB", "team": "Tennessee", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 5, "player": "Malachi Toney", "pos": "WR", "team": "Miami", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 6, "player": "Gio Lopez", "pos": "QB", "team": "Wake Forest", "spots_up": 1, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 7, "player": "Darian Mensah", "pos": "QB", "team": "Miami", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 8, "player": "Wayshawn Parker", "pos": "RB", "team": "Utah", "spots_up": 2, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 9, "player": "Xavier Gilliam", "pos": "DT", "team": "Tennessee", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"},
+ {"board": "week10", "rank": 10, "player": "CJ Carr", "pos": "QB", "team": "Notre Dame", "spots_up": null, "as_of": "2026-11-24", "post": "https://x.com/HeismanTrophy/status/2125245215569039668"}
 ]
