@@ -15,7 +15,7 @@
   "rec": 86,
   "rec_yds": 1482,
   "rec_td": 17,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
  },
  {
   "player": "Devon Dampier",
@@ -33,7 +33,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
  },
  {
   "player": "Darian Mensah",
@@ -51,7 +51,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
  },
  {
   "player": "Gio Lopez",
@@ -69,25 +69,7 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-23"
- },
- {
-  "player": "CJ Carr",
-  "pos": "QB",
-  "team": "Notre Dame",
-  "record": "10-1",
-  "games": 11,
-  "cmp": 216,
-  "att": 319,
-  "pass_yds": 2697,
-  "pass_td": 24,
-  "int": 3,
-  "rush_yds": 87,
-  "rush_td": 3,
-  "rec": null,
-  "rec_yds": null,
-  "rec_td": null,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
  },
  {
   "player": "Gunner Stockton",
@@ -105,7 +87,25 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
+ },
+ {
+  "player": "CJ Carr",
+  "pos": "QB",
+  "team": "Notre Dame",
+  "record": "10-1",
+  "games": 11,
+  "cmp": 216,
+  "att": 319,
+  "pass_yds": 2697,
+  "pass_td": 24,
+  "int": 3,
+  "rush_yds": 87,
+  "rush_td": 3,
+  "rec": null,
+  "rec_yds": null,
+  "rec_td": null,
+  "as_of": "2026-11-24"
  },
  {
   "player": "Keelon Russell",
@@ -123,6 +123,6 @@
   "rec": null,
   "rec_yds": null,
   "rec_td": null,
-  "as_of": "2026-11-23"
+  "as_of": "2026-11-24"
  }
 ]
