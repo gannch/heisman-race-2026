@@ -3,11 +3,11 @@
   "player": "Jeremiah Smith",
   "team": "Ohio State",
   "pos": "WR",
-  "fanduel": -450,
-  "kalshi_pct": 79.5,
-  "polymarket_pct": 78.5,
+  "fanduel": -425,
+  "kalshi_pct": 77.5,
+  "polymarket_pct": 77.5,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "Devon Dampier",
@@ -17,7 +17,7 @@
   "kalshi_pct": 13.5,
   "polymarket_pct": 13.5,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "Darian Mensah",
@@ -25,9 +25,9 @@
   "pos": "QB",
   "fanduel": 2500,
   "kalshi_pct": 5.5,
-  "polymarket_pct": 4.5,
+  "polymarket_pct": 5.5,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "Gio Lopez",
@@ -37,36 +37,36 @@
   "kalshi_pct": 2.5,
   "polymarket_pct": null,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "Gunner Stockton",
   "team": "Georgia",
   "pos": "QB",
-  "fanduel": 5000,
+  "fanduel": 4500,
   "kalshi_pct": 2,
   "polymarket_pct": 2.5,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "CJ Carr",
   "team": "Notre Dame",
   "pos": "QB",
-  "fanduel": 4500,
-  "kalshi_pct": 1,
-  "polymarket_pct": 1.5,
+  "fanduel": 5000,
+  "kalshi_pct": null,
+  "polymarket_pct": null,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  },
  {
   "player": "Keelon Russell",
   "team": "Alabama",
   "pos": "QB",
   "fanduel": 12500,
-  "kalshi_pct": 1,
+  "kalshi_pct": null,
   "polymarket_pct": null,
   "book_avg": null,
-  "as_of": "2026-11-25"
+  "as_of": "2026-11-26"
  }
 ]
